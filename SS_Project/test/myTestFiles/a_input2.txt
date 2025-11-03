@@ -1,0 +1,74 @@
+.equ term_out, 0x100
+jmp skok
+.word 0xa, 0xb
+lab_c:
+.word 0xc
+.word 0xd
+
+lab_call:
+ld $0x69696969, %r1
+ret
+
+lab_int:
+ld $0x43434343, %r1
+iret
+
+halt
+skok:
+ld $4, %r4
+ld $lab_c, %r5
+ld 16, %r6
+ld lab_c, %r7
+ld %r4, %r8
+ld [%r5], %r9
+ld [%r5 + 4], %r10
+.equ eku, 0xfffffffc
+ld [%r5 + eku], %r11
+xchg %r10, %r11
+add %r4, %r3
+add %r4, %r3
+sub %r4, %r2
+add %r4, %r1
+mul %r4, %r1 
+div %r4, %r5
+not %r1
+and %r5, %r1
+or  %r10, %r11
+xor %r9, %r8
+shl %r4, %r7
+shr %r4, %r8
+push %r9
+pop %r8
+beq %r8, %r9, beq_jmp
+halt
+beq_jmp:
+bne %r8, %r10, bne_jmp
+halt
+bne_jmp:
+bgt %r11, %r10, bgt_jmp
+halt
+bgt_jmp:
+csrwr %r11, %handler
+csrrd %handler, %r13
+st %r1, 0x20000000
+st %r2, eku_st2
+.equ eku_st2, 0x20000004
+st %r4, %r3
+ld $0x20000008, %r4
+st %r5, [%r4]
+st %r5, [%r4 + 4]
+.equ eku_st3, 8
+st %r5, [%r4 + eku_st3]
+ld %cause, %r1
+ld [%cause], %r2
+ld [%cause+4], %r3
+st %r4, %cause
+st %r3, [%cause]
+st %r3, [%cause+4] 
+ld $7, %r1
+call lab_call
+ld %r1, %r2
+ld $lab_int, %r3
+csrwr %r3, %handler
+int
+ld %r1, %r2

@@ -1,0 +1,49 @@
+.global a, b, c, d, e
+.extern f,g,h,a,f
+.equ e,  d + 2
+.equ d, a+3*b-c/2
+.equ e1,  d + 2 + e * 3
+.section s1
+.equ a, 3
+.equ e2,  d + 2 + e * 3
+.section s2
+.equ b, 5
+.equ c, 4+10
+.skip 9
+.ascii "Hello"
+.skip 2
+.word 0x12345678, e, e1, e2, xx
+.equ xx, 5
+.section s1
+.skip 1
+.word 0x44332211
+.skip 3
+.word 0x00000005
+.section s3
+halt
+int
+iret
+ret
+push %r1
+pop %r2
+xchg %r3, %r4
+add %r5, %r6
+sub %r7, %r8
+mul %r9, %r10
+div %r11, %r12
+prom:
+not %r13
+and %r14, %r15
+or  %sp, %pc
+xor %r0, %r1
+shl %r2, %r3
+shr %r4, %r5
+csrrd %handler, %r6
+csrwr %r7, %status
+csrwr %r8, %cause
+.section s4
+ld $5, %r2
+ld test, %r3
+ld $prom, %r3
+.equ test, h+3
+
