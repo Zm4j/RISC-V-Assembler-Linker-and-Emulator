@@ -1,20 +1,22 @@
 # **RISC-V Assembler, Linker, and Emulator**
 
-A complete **RISC-V software toolchain** implemented in **C++**, consisting of an **assembler**, **linker**, and **emulator**.  
-This project provides an end-to-end environment for assembling, linking, and executing RISC-V assembly programs with support for relocatable and executable output formats.
+A complete **RISC-V software toolchain** implemented in **C++**, consisting of an **assembler**, **linker**, and **emulator**.  <br>
+This project provides an end-to-end environment for assembling, linking, and executing RISC-V assembly programs with support for relocatable and executable output formats. <br>
+the project was carried out in conjunction with the Faculty of Electrical Engineering in Belgrade, as an optional project part of the System Software course for the school year 2024/2025. <br>
 
 ---
 
 ## 🧩 **Project Structure**
 
-├── inc/       # Header files (.h)
-├── src/       # Source files (.cpp)
-├── build/     # Build artifacts (generated during compilation)
-├── misc/      # Miscellaneous resources and helper files
-├── Makefile   # Main build configuration
-├── assembler  # Generated assembler executable (after build)
-├── linker     # Generated linker executable (after build)
-└── emulator   # Generated emulator executable (after build)
+├── build/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Build artifacts (generated during compilation)<br>
+├── inc/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Header files (.h)<br>
+├── misc/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Miscellaneous resources and helper files<br>
+├── src/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Source files (.cpp)<br>
+├── test/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Mix of tests that came with project and my personal tests<br>
+├── Makefile&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Main build configuration<br>
+├── assembler&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Generated assembler executable (after build)<br>
+├── linker&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Generated linker executable (after build)<br>
+└── emulator&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Generated emulator executable (after build)<br>
 
 - Files starting with **a_** belong to the **assembler**.  
 - Files starting with **l_** belong to the **linker**.  
@@ -48,10 +50,7 @@ Each source file is processed into an intermediate representation containing sym
 ```bash
 ./asembler [-o output_file] input_file
 Options:
-
--o output_file   — specifies the output file name.
-
-input_file       — the assembly source file to assemble.
+  -o output_file             — specifies the output file name.
 ```
 
 ### **Linker**
@@ -60,16 +59,13 @@ Performs symbol resolution, relocation, and section placement based on provided 
 
 **Usage:**
 ```bash
-./linker [-o output_file] [-hex] [-relocatable] [-place=section@address] input_file1 input_file2 ...
+./linker [-o output_file] [-hex] [-relocatable] [-place=section@address] input_file1, input_file2, ...
+
 Options:
-
--o output_file             — name of the output file.
-
--hex                       — generates a hexadecimal memory image executable by the emulator.
-
--relocatable               — produces a relocatable archive (like a library).
-
--place=section@address     — assigns a custom starting address to a specific section (only valid with -hex).
+  -o output_file             — name of the output file.
+  -hex                       — generates a hexadecimal memory image executable by the emulator.
+  -relocatable               — produces a relocatable archive (like a library).
+  -place=section@address     — assigns a custom starting address to a specific section (only valid with -hex).
 ```
 
 ### **Emulator**
@@ -79,9 +75,6 @@ Implements memory, registers, stack, interrupt handling, and instruction decodin
 **Usage**
 ```bash
 ./emulator input_file
-Options:
-
-input_file — the program file produced by the linker (typically a .hex file).
 ```
 
 ## 🏗️ **Build and Run Example**
@@ -95,7 +88,7 @@ make build_all
 ./asembler -o file2.o program2.s
 
 # Link object files into executable hex
-./linker -o final.hex -hex file1.o file2.o -place=.text@0x40000000
+./linker -o final.hex -hex file1.o file2.o -place=code@0x40000000
 
 # Run program in emulator
 ./emulator final.hex
@@ -103,22 +96,17 @@ make build_all
 
 ## 💡 **Notes**
 
-The build/ folder is automatically generated during compilation and contains temporary build files.
-
-The toolchain supports modular extension, allowing future additions such as new instruction types or section attributes.
-
-Designed for educational purposes and experimentation with RISC-V architecture and low-level systems concepts.
+- The build/ folder is automatically generated during compilation and contains temporary build files.
+- The toolchain supports modular extension, allowing future additions such as new instruction types or section attributes.
+- Designed for educational purposes and experimentation with RISC-V architecture and low-level systems concepts.
+- More details about project are given inside .pdf file that is text of project that is done here for C level (project is in Serbian)
 
 ## ⚙️ **Requirements**
 
 To build and run the project, ensure the following tools are installed:
 
-g++ (C++17 or later)
-
-make
-
-flex
-
-bison
-
-pthread (for threading support)
+- g++ (C++17 or later)
+- make
+- flex
+- bison
+- pthread (for threading support)
